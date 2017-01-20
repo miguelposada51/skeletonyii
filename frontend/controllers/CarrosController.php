@@ -63,6 +63,9 @@ class CarrosController extends Controller
      */
     public function actionCreate()
     {
+     
+      if(yii::$app->user->can('create-carros')){
+
         $model = new Carros();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -72,6 +75,10 @@ class CarrosController extends Controller
                 'model' => $model,
             ]);
         }
+      }else{
+        throw new \yii\web\HttpException(403, 'Operacion no permitida.');
+        
+      }
     }
 
     /**
